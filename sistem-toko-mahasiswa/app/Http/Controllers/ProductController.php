@@ -9,6 +9,16 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    // public function index($number)
+    // {
+    //     // Variabel $result dibuat di sini
+    //     $result = $number + 10; // Atau $number * 10, sesuai logika Anda.
+
+    //     // Variabel $result dilempar ke view menggunakan compact()
+    //     return view('product', compact('result'));
+    // }
+    
     public function index()
     {
         $nama = 'Mahasiswa Unsika';
