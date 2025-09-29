@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UtsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,9 +42,11 @@ Route::get('/route_count/{id}', [ProductController::class,'show']);
 
 Route::get('/produk', [ProductController::class, 'index']);
 
-Route::get('/uts', function () {
-    return view('uts'); 
-});
+Route::get('/uts', [UtsController::class, 'uts']);
 
-    require __DIR__.'/auth.php';
+Route::get('/uts/web', [UtsController::class, 'web']);
+
+Route::get('/uts/database', [UtsController::class, 'database']);
+
+require __DIR__.'/auth.php';
  
