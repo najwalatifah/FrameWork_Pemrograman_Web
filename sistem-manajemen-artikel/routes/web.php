@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,23 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-route::get('/rahasia', action: function (): string {
-    return 'ini path rahasia';
-})->middleware(middleware: ['auth','RoleCheck:admin']);
+Route::resource('articles', ArticleController::class)->middleware('auth');
 
-use App\Http\Controllers\ProductController;
-
-Route::middleware(['auth', 'rolecheck:admin,owner'])->group(function () {
-    Route::get('/product/{angka}', [ProductController::class, 'index']);
-})->middleware(['auth','RoleCheck:admin,owner']);
-
-Route::get('/route_count/{id}', [ProductController::class,'show']);
-
-Route::get('/produk', [ProductController::class, 'index']);
-
-Route::get('/uts', function () {
-    return view('uts'); 
-});
-
-    require __DIR__.'/auth.php';
- 
+require __DIR__.'/auth.php';
