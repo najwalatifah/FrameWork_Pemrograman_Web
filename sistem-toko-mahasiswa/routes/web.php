@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtsController;
+use App\Http\Controllers\ProdukController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,13 +42,20 @@ Route::middleware(['auth', 'rolecheck:admin,owner'])->group(function () {
 
 Route::get('/route_count/{id}', [ProductController::class,'show']);
 
-Route::get('/produk', [ProductController::class, 'index']);
+// Route::get('/produk', [ProductController::class, 'index']);
 
 Route::get('/uts', [UtsController::class, 'uts']);
 
 Route::get('/uts/web', [UtsController::class, 'web']);
 
 Route::get('/uts/database', [UtsController::class, 'database']);
+
+//praktikum form
+Route::get('product2/create', [ProductController::class, 'create'])->name("product-create");
+Route::post('product', [ProductController::class, 'store'])->name("product-store");
+
+// Tugas Praktikum 5
+Route::get('/produk/{nilai}', [ProductController::class, 'show']);
 
 require __DIR__.'/auth.php';
  

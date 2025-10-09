@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,7 @@ class ProductController extends Controller
         $nama = 'Mahasiswa Unsika';
         return view('produk', ['nama' => $nama, 'alertMessage' =>
         'selamat belajar blade', 'alertType' => 'succes']);
+
     }
     
 
@@ -31,7 +33,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view("master-data.product-master.create-product");
     }
 
     /**
@@ -39,15 +41,43 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validasi
+        $validasi = $request->validate([
+            'product_name' => 'required|string|max:255',
+            'unit' => 'required|string|max:50',
+            'type' => 'required|string|max:50',
+            'information' => 'nullable|string',
+            'qty' => 'required|integer',
+            'producer' => 'required|string|max:255',
+        ]);
+
+        // Proses simpan data kedalam database
+        Product::create($validasi);
+        return redirect()->back()->with('success','Product created successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($nilai)
     {
-        return view(view:'barang', data:['isi_data'=>$id]);
+        // return view(view:'barang', data:['isi_data'=>$id]);
+        // Cek ganjil / genap
+        // Pastikan numeric agar operasi % aman
+        // Pastikan nilai angka
+        $nilai = (int) $nilai;
+
+        // Cek ganjil/genap
+        if ($nilai % 2 == 0) {
+            $type = 'success';
+            $message = "Nilai ini adalah genap.";
+        } else {
+            $type = 'warning';
+            $message = "Nilai ini adalah ganjil.";
+        }
+
+        // Kirim data ke view
+        return view('produk', compact('type', 'message'));
     }
 
     /**

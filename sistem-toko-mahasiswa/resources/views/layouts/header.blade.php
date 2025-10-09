@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,4 +10,4 @@
     <a href="/uts/web">UTS Pemrograman Web</a>
     <a href="/uts/database">UTS Database</a>
 </body>
-</html>
+</html> --}}
