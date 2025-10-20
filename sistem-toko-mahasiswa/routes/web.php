@@ -57,5 +57,10 @@ Route::post('product', [ProductController::class, 'store'])->name("product-store
 // Tugas Praktikum 5
 Route::get('/produk/{nilai}', [ProductController::class, 'show']);
 
+// Tugas Praktikum 7
+Route::resource('products', ProductController::class);
+Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('produk-edit');
+Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('produk-update');
+Route::delete('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('produk-destroy');
 require __DIR__.'/auth.php';
  

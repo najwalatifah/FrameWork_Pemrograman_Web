@@ -21,12 +21,15 @@ class ProductController extends Controller
 
     public function index()
     {
-        $nama = 'Mahasiswa Unsika';
-        return view('produk', ['nama' => $nama, 'alertMessage' =>
-        'selamat belajar blade', 'alertType' => 'succes']);
+        // $nama = 'Mahasiswa Unsika';
+        // return view('produk', ['nama' => $nama, 'alertMessage' =>
+        // 'selamat belajar blade', 'alertType' => 'succes']);
+        $data = Product::all();
+        return view('produk.index', compact('data'));
 
     }
-    
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,6 +37,7 @@ class ProductController extends Controller
     public function create()
     {
         return view("master-data.product-master.create-product");
+        return view('produk.create');
     }
 
     /**
@@ -42,18 +46,25 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //validasi
-        $validasi = $request->validate([
-            'product_name' => 'required|string|max:255',
-            'unit' => 'required|string|max:50',
-            'type' => 'required|string|max:50',
-            'information' => 'nullable|string',
-            'qty' => 'required|integer',
-            'producer' => 'required|string|max:255',
+        $request->validate([
+            'nama' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|integer',
         ]);
 
         // Proses simpan data kedalam database
-        Product::create($validasi);
+        Product::create($request->all());
         return redirect()->back()->with('success','Product created successfully!');
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
+
+        $request->validate([
+            'nama' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|integer',
+        ]);
+
+        Product::create($request->all());
+        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
     /**
@@ -85,7 +96,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $produk = Product::find($id);
+        return view('produk.edit', compact('produk'));
     }
 
     /**
@@ -93,7 +105,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama' => 'required',
+            'harga' => 'required|numeric',
+            'stok' => 'required|integer',
+        ]);
+
+        $product->update($request->all());
+        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
     }
 
     /**
@@ -101,6 +120,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
     }
 }
