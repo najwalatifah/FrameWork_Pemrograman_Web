@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Dashboard') }}
@@ -13,7 +15,7 @@
                     <div class="container mx-auto mt-5">
                         <h2 class="mb-5 text-2xl font-bold">Create New Product</h2>
                         <x-auth-session-status class="mb-4" :status="session('success')" />
-                            <form action="{{ route('product-store')}}" method="POST" class="space-y-4">
+                            <form action="{{ route('products.store')}}" method="POST" class="space-y-4">
                             @csrf <!-- Laravel CSRF protection -->
                            
                             <div class="form-group">
@@ -60,5 +62,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+ @endsection
  

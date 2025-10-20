@@ -24,52 +24,31 @@ class ProductController extends Controller
         // $nama = 'Mahasiswa Unsika';
         // return view('produk', ['nama' => $nama, 'alertMessage' =>
         // 'selamat belajar blade', 'alertType' => 'succes']);
-        $data = Product::all();
-        return view('produk.index', compact('data'));
-
+        $products = Product::all();
+        return view('master-data.product-master.index', compact('products'));
     }
 
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view("master-data.product-master.create-product");
-        return view('produk.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //validasi
+    
         $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
-        ]);
-
-        // Proses simpan data kedalam database
-        Product::create($request->all());
-        return redirect()->back()->with('success','Product created successfully!');
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
-
-        $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
+            'product_name' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
         ]);
 
         Product::create($request->all());
         return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show($nilai)
     {
         // return view(view:'barang', data:['isi_data'=>$id]);
@@ -96,23 +75,26 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $produk = Product::find($id);
-        return view('produk.edit', compact('produk'));
+        $products = Product::find($id);
+        return view('master-data.product-master.edit', compact('products'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'stok' => 'required|integer',
+             'product_name' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
+            'type' => 'required|string|max:255',
         ]);
 
-        $product->update($request->all());
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
+            $products = Product::findOrFail($id);
+            $products->update($request->all());
+
+    return redirect()->route('products.index')
+                     ->with('success', 'Produk berhasil diperbarui!');
+
     }
 
     /**
@@ -120,7 +102,10 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
+        $products = Product::findOrFail($id);
+        $products->delete();
+
+    return redirect()->route('products.index')
+                     ->with('success', 'Produk berhasil dihapus!');
     }
 }

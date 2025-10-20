@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProdukController;
 
 /*
@@ -34,33 +35,32 @@ route::get('/rahasia', action: function (): string {
     return 'ini path rahasia';
 })->middleware(middleware: ['auth','RoleCheck:admin']);
 
-use App\Http\Controllers\ProductController;
 
 Route::middleware(['auth', 'rolecheck:admin,owner'])->group(function () {
     Route::get('/product/{angka}', [ProductController::class, 'index']);
 })->middleware(['auth','RoleCheck:admin,owner']);
 
 Route::get('/route_count/{id}', [ProductController::class,'show']);
-
-// Route::get('/produk', [ProductController::class, 'index']);
-
 Route::get('/uts', [UtsController::class, 'uts']);
-
 Route::get('/uts/web', [UtsController::class, 'web']);
-
 Route::get('/uts/database', [UtsController::class, 'database']);
 
 //praktikum form
-Route::get('product2/create', [ProductController::class, 'create'])->name("product-create");
-Route::post('product', [ProductController::class, 'store'])->name("product-store");
+// Route::get('product/create', [ProductController::class, 'create'])->name("product-create");
+// Route::post('product', [ProductController::class, 'store'])->name("product-store");
 
-// Tugas Praktikum 5
-Route::get('/produk/{nilai}', [ProductController::class, 'show']);
 
 // Tugas Praktikum 7
-Route::resource('products', ProductController::class);
-Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('produk-edit');
-Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('produk-update');
-Route::delete('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('produk-destroy');
+Route::get('/produk', [ProductController::class, 'index'])->name('products.index');
+Route::get('/produk/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/produk/store', [ProductController::class, 'store'])->name('products.store');
+Route::get('/produk/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
+Route::post('/produk/update/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/produk/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+// Tugas Praktikum 5
+//Route::get('/produk/{nilai}', [ProductController::class, 'show']);
+
+
 require __DIR__.'/auth.php';
  

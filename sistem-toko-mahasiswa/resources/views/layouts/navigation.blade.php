@@ -16,7 +16,7 @@
 
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('product-create')">
+                        <x-dropdown-link :href="route('products.create')">
                            Product Master
                         </x-dropdown-link>
 
